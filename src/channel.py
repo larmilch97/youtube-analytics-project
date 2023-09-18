@@ -21,6 +21,9 @@ class Channel:
         self.video_count = channel['items'][0]['statistics']['videoCount']
         self.view_count = channel['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        return f"{self.title} ({self.url})"
+
     def print_info(self) -> None:
         """Выводит в консоль информацию о канале."""
         youtube = build('youtube', 'v3', developerKey=self.api_key)
@@ -34,3 +37,15 @@ class Channel:
     def to_json(self, filename) -> None:
         with open(filename, "w") as file:
             json.dump(self.__dict__, file)
+
+    def __add__(self, other: type(object)) -> int:
+        return int(self.count_subscribers) + int(other.count_subscribers)
+
+    def __sub__(self, other: type(object)) -> int:
+        return int(self.count_subscribers) - int(other.count_subscribers)
+
+    def __gt__(self, other) -> bool:
+        return int(self.count_subscribers) > int(other.count_subscribers)
+
+    def __ge__(self, other) -> bool:
+        return int(self.count_subscribers) >= int(other.count_subscribers)
