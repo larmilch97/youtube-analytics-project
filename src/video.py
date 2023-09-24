@@ -2,7 +2,6 @@ import os
 from googleapiclient.discovery import build
 
 
-
 class Video:
     api_key: str = os.getenv('YT_API_KEY')
     youtube = build('youtube', 'v3', developerKey=api_key)
@@ -15,6 +14,9 @@ class Video:
         self.view_count: int = video_response['items'][0]['statistics']['viewCount']
         self.like_count: int = video_response['items'][0]['statistics']['likeCount']
         self.comment_count: int = video_response['items'][0]['statistics']['commentCount']
+
+    def __str__(self):
+        return self.title
 
 
 class PLVideo(Video):
